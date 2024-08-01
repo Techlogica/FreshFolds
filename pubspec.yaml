@@ -1,0 +1,39 @@
+name: freshfolds_laundry
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.1+2
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  webview_flutter: ^4.5.0
+  fluttertoast: ^8.2.4
+  http: ^1.2.0
+  html: ^0.15.4
+  get: ^4.6.6
+  url_launcher:
+  shared_preferences: ^2.2.2
+  path_provider: ^2.1.2
+  connectivity_plus: ^6.0.1
+  flutter_cache_manager: ^3.1.2
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/
