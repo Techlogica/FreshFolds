@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:freshfolds_laundry/splash/splash_binding.dart';
 import 'package:freshfolds_laundry/splash/splash_screen.dart';
 import 'package:get/get.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'home/home_binding.dart';
-import 'home/home_screen.dart';
 
 void main() {
   runApp(MyApp());
