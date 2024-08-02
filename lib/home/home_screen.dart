@@ -11,7 +11,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 class HomeScreen extends StatefulWidget {
   final WebViewController controller;
 
-  const HomeScreen({super.key,required this.controller});
+  const HomeScreen({super.key, required this.controller});
 
   @override
   HomeScreenState createState() => HomeScreenState();
@@ -19,9 +19,8 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   late WebViewController _controller;
-  final String url = 'https://freshfolds.ae';
+  final String url = 'https://freshfolds.ae/mobile-1/';
   bool _isOffline = false;
-  // bool _isWebViewLoaded = false;
   late DateTime currentTime;
 
   @override
@@ -61,6 +60,12 @@ class HomeScreenState extends State<HomeScreen> {
     _controller
       ..setNavigationDelegate(
         NavigationDelegate(
+          onPageStarted: (String url){
+            _injectCSS();
+          },
+          onProgress: (int progress) {
+            _injectCSS();
+          },
           onPageFinished: (String url) async {
             if (!_isOffline) {
               final content =
@@ -74,17 +79,14 @@ class HomeScreenState extends State<HomeScreen> {
               await file.writeAsBytes(bytes);
               await DefaultCacheManager().putFile(url, bytes);
             }
-            // setState(() {
-            //   _isWebViewLoaded = true;
-            // });
+            _injectCSS();
           },
           onNavigationRequest: (NavigationRequest request) {
             if (request.url.startsWith('mailto:') ||
                 request.url.startsWith('tel:')) {
               _launchURL(request.url);
               return NavigationDecision.prevent;
-            } else if( request.url.startsWith('whatsapp://send'))
-            {
+            } else if (request.url.startsWith('whatsapp://send')) {
               _launchURL(request.url);
               return NavigationDecision.prevent;
             }
@@ -95,13 +97,82 @@ class HomeScreenState extends State<HomeScreen> {
       ..loadRequest(Uri.parse(url));
   }
 
+  void _injectCSS() {
+    String cssStyles = """
+      .page-id-3329 .whatsapp.mobonly {
+        display: block !important;
+        position: relative;
+        bottom: 0px;
+        width: 24px;
+      }
+      .page-id-3329 .whatsapp {
+        display: none;
+      }
+      .page-id-3329 #displayAppMob {
+        display: block !important;
+      }
+      .page-id-3329 header#home {
+        display: none;
+      }
+      .dn-m {
+        display: none;
+      }
+      .page-id-3329 h2.elementor-heading-title.elementor-size-default {
+        font-family: "Roboto", Sans-serif !important;
+        font-size: 18px;
+        margin: 40px 0 2px 0;
+        line-height: 1.6em;
+        font-weight: 600 !important;
+        letter-spacing: 0.5px;
+      }
+      .page-id-3329 .elementor-widget-divider--view-line.elementor-widget.elementor-widget-divider {
+        display: none;
+      }
+      .page-id-3329 .pricesList h3.elementor-heading-title.elementor-size-default {
+        font-size: 16px !important;
+        letter-spacing: 0.4px;
+      }
+      .page-id-3329 .pricesList.e-flex.e-con-boxed.e-con.e-parent {
+        padding: 0;
+      }
+      .page-id-3329 .pricesList .elementor-element.e-con-full.e-flex.e-con.e-child {
+        margin-bottom: 5%;
+        padding: 6% 3%;
+        box-shadow: 0px 0px 10px 0px rgb(185 185 185 / 28%);
+      }
+      .page-id-3329 section#conTactForm {
+        display: none;
+      }
+      .page.page-id-3329 .page-content.default-padding {
+        background: none;
+      }
+      .page-id-3329 .OnlyMob {
+        margin-top: 70px;
+      }
+      .page-id-3329 .margin-bmApp {
+        display: none;
+      }
+      .page-id-3329 .pricesList.pm {
+        padding-bottom: 60px !important;
+      }
+    """;
+
+    String jsCode = """
+      var style = document.createElement('style');
+      style.innerHTML = `$cssStyles`;
+      document.head.appendChild(style);
+    """;
+
+    _controller.runJavaScript(jsCode);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF13283F),
       body: WillPopScope(
         onWillPop: onWillPop,
-        child:  WebViewWidget(controller: _controller)
+        child: WebViewWidget(controller: _controller),
       ),
     );
   }

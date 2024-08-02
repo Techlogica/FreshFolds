@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _preloadWebView() async {
     _controller = WebViewController();
     await _controller.setJavaScriptMode(JavaScriptMode.unrestricted);
-    await _controller.loadRequest(Uri.parse('https://freshfolds.ae'));
+    await _controller.loadRequest(Uri.parse('https://freshfolds.ae/mobile-1/'));
   }
 
 }
