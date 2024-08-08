@@ -179,9 +179,6 @@ class HomeScreenState extends State<HomeScreen> {
 
   Future<bool> onWillPop() async {
     if (await _controller.canGoBack()) {
-      _controller.goBack();
-      return Future.value(false);
-    } else {
       DateTime now = DateTime.now();
       if (now.difference(currentTime) > const Duration(seconds: 2)) {
         currentTime = now;
@@ -191,6 +188,20 @@ class HomeScreenState extends State<HomeScreen> {
         SystemNavigator.pop();
         return Future.value(true);
       }
+      // _controller.goBack();
+      // return Future.value(false);
+    } else {
+      _controller.goBack();
+      return Future.value(false);
+      // DateTime now = DateTime.now();
+      // if (now.difference(currentTime) > const Duration(seconds: 2)) {
+      //   currentTime = now;
+      //   Fluttertoast.showToast(msg: 'Press again to exit');
+      //   return Future.value(false);
+      // } else {
+      //   SystemNavigator.pop();
+      //   return Future.value(true);
+      // }
     }
   }
 
