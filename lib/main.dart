@@ -3,6 +3,7 @@ import 'package:freshfolds_laundry/splash/splash_binding.dart';
 import 'package:freshfolds_laundry/splash/splash_screen.dart';
 import 'package:get/get.dart';
 
+
 void main() {
   runApp(MyApp());
 }
@@ -16,11 +17,6 @@ class MyApp extends StatelessWidget {
       page: () => const SplashScreen(),
       binding: SplashBinding(),
     ),
-    // GetPage(
-    //   name: '/home_screen',
-    //   // page: () => const  HomeScreen(),
-    //   binding: HomeBinding(),
-    // )
   ];
 
   @override
