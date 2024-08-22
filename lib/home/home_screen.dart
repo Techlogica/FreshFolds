@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
+import 'package:http/http.dart' as http;
 class HomeScreen extends StatefulWidget {
   final WebViewController controller;
 
@@ -19,17 +19,36 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   late WebViewController _controller;
-  final String url = 'https://freshfolds.ae/mobile-1/';
+  String url = '';
   bool _isOffline = false;
   late DateTime currentTime;
-
   @override
   void initState() {
     super.initState();
+    // _checkLoginStatus();
     _controller = widget.controller;
     _checkInternetConnection();
     currentTime = DateTime.now();
   }
+
+  // Future<void> _checkLoginStatus() async {
+  //   try {
+  //     final response = await http.get(Uri.parse('https://freshfolds.ae/wp-json/custom/v1/is_logged_in'));
+  //     if (response.statusCode == 200) {
+  //       if (response.body == 'true') {
+  //         setState(() {
+  //           url = 'https://freshfolds.ae/mobile-1/';
+  //         });
+  //       } else {
+  //         setState(() {
+  //           url = 'https://freshfolds.ae/mobile-main-page/';
+  //         });
+  //       }
+  //     }
+  //   } catch (e) {
+  //     print('Error checking login status: $e');
+  //   }
+  // }
 
   Future<void> _checkInternetConnection() async {
     try {
