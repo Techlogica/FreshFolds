@@ -10,7 +10,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-  // This widget is the root of your application.
   final pages = [
     GetPage(
       name: '/splash_screen',
